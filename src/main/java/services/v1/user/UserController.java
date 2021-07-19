@@ -1,16 +1,17 @@
 package services.v1.user;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import services.v1.user.model.UserModel;
+import utils.DBConn;
+import java.util.List;
 
 @Component
 public class UserController {
 
-	public String hello(String name) {
-		return String.format("Hello %s!", name);
+	private UserDAO userDAO = new UserDAO();
+
+	public List<UserModel> getUsers() throws Exception {
+		return userDAO.getUsers();
 	}
+
 }

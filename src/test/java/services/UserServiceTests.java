@@ -14,7 +14,7 @@ class UserServiceTests {
 	void contextLoads() {
 		List<UserModel> list = null;
 		try {
-			list = new DBConn("dadn1cddkhm83j", "SELECT * FROM tb_user;", UserModel.class).execute();
+			list = new DBConn("DB1", "SELECT username, password FROM tb_user;", UserModel.class).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

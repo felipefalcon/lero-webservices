@@ -12,13 +12,13 @@ import utils.ServiceResponse;
 @RestController
 public class UserService {
 
-	UserController userController = new UserController();
+	private UserController userController = new UserController();
 
-	@GetMapping("/hello")
-	public ServiceResponse hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+	@GetMapping("/get-users")
+	public ServiceResponse getUsers() {
 		ServiceResponse response = new ServiceResponse();
 		try{
-			response.result = new DBConn("dadn1cddkhm83j", "SELECT * FROM tb_user;", UserModel.class).execute();
+			response.result = userController.getUsers();
 			return response;
 		}catch (Exception e){
 			response.success = false;
@@ -26,4 +26,19 @@ public class UserService {
 			return response;
 		}
 	}
+
+// Deixando de exemplo pra usar futurto
+//	@GetMapping("/get-users")
+//	public ServiceResponse getUsers(@RequestParam(value = "name", defaultValue = "World") String name) {
+//		ServiceResponse response = new ServiceResponse();
+//		try{
+//			response.result = userController.getUsers();
+//			return response;
+//		}catch (Exception e){
+//			response.success = false;
+//			response.stacktrace = e.getStackTrace().toString();
+//			return response;
+//		}
+//	}
+
 }
