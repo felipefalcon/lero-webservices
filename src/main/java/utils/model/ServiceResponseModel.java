@@ -1,6 +1,6 @@
-package utils;
+package utils.model;
 
-public class ServiceResponse<T> {
+public class ServiceResponseModel<T> {
     public Boolean success = true;
     public T result = null;
     public String stacktrace = "";

@@ -1,8 +1,6 @@
 package utils;
 
-import com.sun.tools.javac.util.Pair;
-import org.apache.catalina.User;
-import services.v1.user.model.UserModel;
+import utils.model.DBConfModel;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -10,17 +8,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class DBConn {
+public class DBUtil {
 
-    private HashMap<String, DBConf> databases = new HashMap<String, DBConf>();
-    private DBConf DBSelected = null;
+    private HashMap<String, DBConfModel> databases = new HashMap<String, DBConfModel>();
+    private DBConfModel DBSelected = null;
     private String DBName = null;
     private String query = null;
     private Class model = null;
 
-    public DBConn(String DBName, String query, Class model){
+    public DBUtil(String DBName, String query, Class model){
         this.query = query;
         this.model = model;
         this.fillDatabasesConfs();
@@ -29,7 +26,7 @@ public class DBConn {
     }
 
     private void fillDatabasesConfs(){
-        this.databases.put("DB1", new DBConf(
+        this.databases.put("DB1", new DBConfModel(
                 "ec2-3-212-75-25.compute-1.amazonaws.com",
                 5432,
                 "dadn1cddkhm83j",
