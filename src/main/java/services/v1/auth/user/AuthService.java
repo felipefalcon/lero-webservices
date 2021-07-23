@@ -1,21 +1,22 @@
-package services.v1.user;
+package services.v1.auth.user;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import utils.model.ServiceResponseModel;
 
 @SpringBootApplication
 @RestController
-public class UserService {
+public class AuthService {
 
-	private UserController userController = new UserController();
+	private AuthController authController = new AuthController();
 
-	@GetMapping("/get-users")
-	public ServiceResponseModel getUsers() {
+	@GetMapping("/login")
+	public ServiceResponseModel login(String email, String password) {
 		ServiceResponseModel response = new ServiceResponseModel();
 		try{
-			response.result = userController.getUsers();
+			response.result = authController.login(email, password);
 			return response;
 		}catch (Exception e){
 			response.success = false;

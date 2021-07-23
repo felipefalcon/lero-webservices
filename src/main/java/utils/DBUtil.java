@@ -11,15 +11,25 @@ import java.util.List;
 
 public class DBUtil {
 
-    private HashMap<String, DBConfModel> databases = new HashMap<String, DBConfModel>();
+    private final HashMap<String, DBConfModel> databases = new HashMap<String, DBConfModel>();
     private DBConfModel DBSelected = null;
     private String DBName = null;
     private String query = null;
+    private HashMap<Integer, Object> paramsQuery = new HashMap<>();
     private Class model = null;
 
     public DBUtil(String DBName, String query, Class model){
         this.query = query;
         this.model = model;
+        this.fillDatabasesConfs();
+        this.DBSelected = this.databases.get(DBName);
+        this.DBName = DBName;
+    }
+
+    public DBUtil(String DBName, String query, HashMap<Integer, Object> paramsQuery, Class model){
+        this.query = query;
+        this.model = model;
+        this.paramsQuery = paramsQuery;
         this.fillDatabasesConfs();
         this.DBSelected = this.databases.get(DBName);
         this.DBName = DBName;
@@ -48,7 +58,7 @@ public class DBUtil {
             Connection connection = DriverManager.getConnection(
                     "jdbc:postgresql://"+this.DBSelected.host+":"+this.DBSelected.port+"/"+this.DBSelected.database+"?sslmode=require",
                     this.DBSelected.user, this.DBSelected.password);
-            PreparedStatement pstm = connection.prepareStatement(this.query);
+            PreparedStatement pstm = this.createPreparedStatement(connection);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 T item = (T) this.model.getConstructor().newInstance();
@@ -103,6 +113,8 @@ public class DBUtil {
                 field.set(item, field.getType().getConstructor(new Class[]{long.class}).newInstance(value));
             } else if (field.getType() == Integer.class || field.getType() == int.class) {
                 field.set(item, field.getType().getConstructor(new Class[]{int.class}).newInstance(value));
+            } else if (field.getType() == Boolean.class || field.getType() == boolean.class) {
+                field.set(item, field.getType().getConstructor(new Class[]{boolean.class}).newInstance(value));
             } else {
                 field.set(item, field.getType().getConstructor(field.getType()).newInstance(value));
             }
@@ -110,6 +122,33 @@ public class DBUtil {
             e.printStackTrace();
         }
         return item;
+    }
+
+    private PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+        PreparedStatement pstm = connection.prepareStatement(this.query);
+        if (!paramsQuery.isEmpty()) {
+            paramsQuery.forEach((key, value) -> {
+                try {
+                    if(value instanceof Integer){
+                        pstm.setInt(key, (Integer) value);
+                    } else if (value instanceof Float) {
+                        pstm.setFloat(key, (Float) value);
+                    } else if (value instanceof Long) {
+                        pstm.setLong(key, (Long) value);
+                    } else if (value instanceof BigDecimal) {
+                        pstm.setBigDecimal(key, (BigDecimal) value);
+                    } else if (value instanceof Boolean) {
+                        pstm.setBoolean(key, (Boolean) value);
+                    } else {
+                        pstm.setString(key, (String) value);
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+            });
+        }
+        return pstm;
     }
 
 }

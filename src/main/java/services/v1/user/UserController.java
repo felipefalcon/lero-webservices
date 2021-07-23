@@ -24,6 +24,10 @@ public class UserController {
 		return userDAO.getUsers();
 	}
 
+	public List<UserModel> getUserByAuth(String email, String encryptedPassword) throws Exception {
+		return userDAO.getUserByAuth(email, encryptedPassword);
+	}
+
 	public String encrypt() throws Exception {
 
 		String originalString = "howtodoinjava.com";
