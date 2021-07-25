@@ -16,7 +16,7 @@ public class UserDAO {
                     UserModel.class
             ).execute();
         } catch (Exception e) {
-            throw new Exception(e.getStackTrace().toString());
+            throw new Exception(e.getLocalizedMessage());
         }
     }
 
@@ -27,12 +27,12 @@ public class UserDAO {
             paramsQuery.put(2, encryptedPassword);
             return new DBUtil(
                     "DB1",
-                    "SELECT * FROM tb_user WHERE email = ? AND password = ?;",
+                    "SELECT * FROM tb_user WHERE email_user = ? AND password = ?;",
                     paramsQuery,
                     UserModel.class
             ).execute();
         } catch (Exception e) {
-            throw new Exception(e.getStackTrace().toString());
+            throw new Exception(e.getLocalizedMessage());
         }
     }
 

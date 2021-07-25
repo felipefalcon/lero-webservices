@@ -19,7 +19,7 @@ public class UserService {
 			return response;
 		}catch (Exception e){
 			response.success = false;
-			response.stacktrace = e.getStackTrace().toString();
+			response.stacktrace = e.getLocalizedMessage();
 			return response;
 		}
 	}
@@ -32,7 +32,7 @@ public class UserService {
 //			return response;
 //		}catch (Exception e){
 //			response.success = false;
-//			response.stacktrace = e.getStackTrace().toString();
+//			response.stacktrace = e.getLocalizedMessage();
 //			return response;
 //		}
 //	}
@@ -46,7 +46,7 @@ public class UserService {
 //			return response;
 //		}catch (Exception e){
 //			response.success = false;
-//			response.stacktrace = e.getStackTrace().toString();
+//			response.stacktrace = e.getLocalizedMessage();
 //			return response;
 //		}
 //	}

@@ -20,7 +20,7 @@ public class AuthService {
 			return response;
 		}catch (Exception e){
 			response.success = false;
-			response.stacktrace = e.getStackTrace().toString();
+			response.stacktrace = e.getLocalizedMessage();
 			return response;
 		}
 	}
@@ -33,7 +33,7 @@ public class AuthService {
 //			return response;
 //		}catch (Exception e){
 //			response.success = false;
-//			response.stacktrace = e.getStackTrace().toString();
+//			response.stacktrace = e.getLocalizedMessage();
 //			return response;
 //		}
 //	}
@@ -47,7 +47,7 @@ public class AuthService {
 //			return response;
 //		}catch (Exception e){
 //			response.success = false;
-//			response.stacktrace = e.getStackTrace().toString();
+//			response.stacktrace = e.getLocalizedMessage();
 //			return response;
 //		}
 //	}

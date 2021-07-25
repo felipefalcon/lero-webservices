@@ -3,34 +3,24 @@ package services;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import services.v1.user.UserController;
-import services.v1.user.UserService;
+import services.v1.auth.user.AuthService;
 import utils.model.ServiceResponseModel;
 
-@SpringBootTest
-class UserServiceTests {
 
-	UserService userService = new UserService();
+@SpringBootTest
+class AuthServiceTests {
+
+	AuthService authService = new AuthService();
 
 	@Test
 	void contextLoads() {
 		try {
-			ServiceResponseModel list = userService.getUsers();
+			ServiceResponseModel list = authService.login("felipea@gmail.com", "c4ca4238a0b923820dcc509a6f75849b");
 			String json = new Gson().toJson(list);
 			System.out.println(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	@Test
-	void encrypt(){
-		try{
-			String abb = new UserController().encrypt();
-		}catch(Exception e){
-
-		}
-	}
-
 
 }

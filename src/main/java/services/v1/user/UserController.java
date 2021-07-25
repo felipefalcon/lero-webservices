@@ -30,7 +30,7 @@ public class UserController {
 
 	public String encrypt() throws Exception {
 
-		String originalString = "howtodoinjava.com";
+		String originalString = "c4ca4238a0b923820dcc509a6f75849b";
 		String encryptedString = AESUtil.encrypt(originalString) ;
 		// Gmp964ioDY2e5Fi+U0HjPFb5u2Mq4PsAsMuaLWGvwb4=
 		String decryptedString = AESUtil.decrypt(encryptedString) ;
