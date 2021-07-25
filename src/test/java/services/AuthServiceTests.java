@@ -15,8 +15,8 @@ class AuthServiceTests {
 	@Test
 	void contextLoads() {
 		try {
-			ServiceResponseModel list = authService.login("felipea@gmail.com", "c4ca4238a0b923820dcc509a6f75849b");
-			String json = new Gson().toJson(list);
+			ServiceResponseModel returnService = authService.login("felipea@gmail.com", "c4ca4238a0b923820dcc509a6f75849b");
+			String json = new Gson().toJson(returnService);
 			System.out.println(json);
 		} catch (Exception e) {
 			e.printStackTrace();

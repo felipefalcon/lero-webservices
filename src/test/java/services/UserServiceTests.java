@@ -15,8 +15,8 @@ class UserServiceTests {
 	@Test
 	void contextLoads() {
 		try {
-			ServiceResponseModel list = userService.getUsers();
-			String json = new Gson().toJson(list);
+			ServiceResponseModel returnService = userService.getUsers();
+			String json = new Gson().toJson(returnService);
 			System.out.println(json);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -25,10 +25,12 @@ class UserServiceTests {
 
 	@Test
 	void encrypt(){
-		try{
-			String abb = new UserController().encrypt();
-		}catch(Exception e){
-
+		try {
+			Object returnService = new UserController().encrypt();
+			String json = new Gson().toJson(returnService);
+			System.out.println(json);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
