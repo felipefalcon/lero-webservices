@@ -22,3 +22,13 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+apply plugin: 'java'
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'java.services.Application'
+		)
+	}
+}
