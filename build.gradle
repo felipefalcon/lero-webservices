@@ -25,6 +25,11 @@ test {
 
 apply plugin: 'java'
 
+configurations {
+	// configuration that holds jars to include in the jar
+	extraLibs
+}
+
 jar {
 	manifest {
 		attributes(
