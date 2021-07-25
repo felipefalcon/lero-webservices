@@ -31,21 +31,7 @@ jar {
 				'Main-Class': 'services.Application'
 		)
 	}
-}
-
-task fatJar(type: Jar) {
-	manifest.from jar.manifest
-//    classifier = 'all'
 	from {
-		configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
-	} {
-		exclude "META-INF/*.SF"
-		exclude "META-INF/*.DSA"
-		exclude "META-INF/*.RSA"
+		configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
 	}
-	with jar
-}
-
-artifacts {
-	archives fatJar
 }
