@@ -4,15 +4,12 @@ plugins {
 	id 'java'
 }
 
-group = 'com.lero'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	implementation 'org.springframework:spring-core'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.1'
@@ -22,4 +19,22 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+apply plugin: 'java'
+
+configurations {
+	// configuration that holds jars to include in the jar
+	extraLibs
+}
+
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'services.Application'
+		)
+	}
+	from {
+		configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
+	}
 }
