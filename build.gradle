@@ -4,6 +4,10 @@ plugins {
 	id 'java'
 }
 
+group = 'com.lero'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.16'
+
 repositories {
 	mavenCentral()
 }
