@@ -19,7 +19,7 @@ CREATE TABLE tb_user(
 );  
 
 -- Tabela de pendencias de Reset de Senha de Usuários
-CREATE TABLE tb_reset_password_user(
+CREATE TABLE tb_user_reset_password(
     id_reset_pass           BIGSERIAL PRIMARY KEY,
     id_user                 BIGINT NOT NULL,
     dt_solicited            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,14 +28,16 @@ CREATE TABLE tb_reset_password_user(
 );  
 
 -- Tabela de grupo de usuário (Usuário Comum ou Administrador)
-CREATE TABLE tb_gp_user(
-    id_gp_user              SERIAL PRIMARY KEY,
-    ds_go_user              VARCHAR
+CREATE TABLE tb_user_group(
+    id_user_gp              SERIAL PRIMARY KEY,
+    ds_user_gp              VARCHAR
 );
+-- Grupos iniciais: Comum, VIP e Administrador
+INSERT INTO tb_user_group(ds_user_gp) VALUES ('COMMOM'), ('VIP'), ('ADMIN');
 
 -- Tabela de Fotos dos usuários
-CREATE TABLE tb_picture_user(
-    id_picture_user         BIGSERIAL PRIMARY KEY,
+CREATE TABLE tb_user_picture(
+    id_user_picture         BIGSERIAL PRIMARY KEY,
     id_user                 BIGINT NOT NULL,
     is_main_picture         BOOLEAN DEFAULT FALSE,
     dt_upload               DATE NOT NULL DEFAULT NOW(),
@@ -43,7 +45,7 @@ CREATE TABLE tb_picture_user(
 );
 
 -- Tabela de Localização de Usuários
-CREATE TABLE tb_location_user(
+CREATE TABLE tb_user_location(
     id_user                 BIGINT NOT NULL PRIMARY KEY,
     road                    VARCHAR,
     residential             VARCHAR,          
@@ -61,10 +63,10 @@ CREATE TABLE tb_location_user(
 );
   
 -- Tabela de Mensagens de Usuários
-CREATE TABLE tb_message_user(
+CREATE TABLE tb_user_message(
     id_message              BIGSERIAL PRIMARY KEY,
-    id_sender_user          BIGINT NOT NULL,
-    id_receive_user         BIGINT NOT NULL,
+    id_user_sender          BIGINT NOT NULL,
+    id_user_receiver        BIGINT NOT NULL,
     txt_message             VARCHAR NOT NULL,
     dt_message              TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     read_message            BOOLEAN DEFAULT FALSE
@@ -77,18 +79,18 @@ CREATE TABLE tb_reported_reason(
 );
 
 -- Tabela de Denúncias de Usuários
-CREATE TABLE tb_reported_user(
+CREATE TABLE tb_user_reported(
     id_report               BIGSERIAL PRIMARY KEY,
     id_user                 BIGINT NOT NULL,
-    id_reported_user        BIGINT NOT NULL,
+    id_user_reported        BIGINT NOT NULL,
     id_reported_reason      INT NOT NULL,
     dt_report               TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     txt_message_report      VARCHAR
 );
 
 -- Tabela de Fotos dos Eventos
-CREATE TABLE tb_picture_event(
-    id_picture_event        BIGSERIAL PRIMARY KEY,
+CREATE TABLE tb_event_picture(
+    id_event_picture        BIGSERIAL PRIMARY KEY,
     id_event                BIGINT NOT NULL,
     is_main_picture         BOOLEAN DEFAULT FALSE,
     dt_upload               DATE NOT NULL DEFAULT NOW(),
@@ -107,7 +109,7 @@ CREATE TABLE tb_event(
 );
 
 -- Tabela dos Participantes de Eventos
-CREATE TABLE tb_participants_event(
+CREATE TABLE tb_event_participant(
     id_event                BIGINT PRIMARY KEY,
     id_user                 BIGINT NOT NULL,
     dt_hr_selected          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -115,3 +117,7 @@ CREATE TABLE tb_participants_event(
 
 COMMIT;
 
+-- TESTES
+-- INSERT INTO tb_user VALUES(1, 'felipea@gmail.com', 'Felipe A', 'AAAA', 'AAAAA', 'M', '19950612'::date, 'Nenhuma', true, 'Nenhuma', 1, 'ACTIVE', '20211212'::date, false);
+
+-- SELECT * FROM tb_user
